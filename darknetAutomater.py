@@ -94,11 +94,11 @@ def labelsCheck(pathToImages, pathToLabels):
     				l = line.split()
     				if (len(l)>3):
     					key = l[4].lower()
-    					if (int (l[0]) > int(l[2])):
+    					if (float (l[0]) > float(l[2])):
     						temp = l[0]
     						l[0] = l[2]
     						l[2] = temp
-    					if ( int(l[1]) > int(l[3])):
+    					if ( float(l[1]) > float(l[3])):
     						temp = l[1]
     						l[1] = l[3]
     						l[3] = temp
@@ -280,12 +280,12 @@ if __name__ == "__main__":
         dataFile.close()
 
         if modelChoice == 1:
-            darknetTrain = os.path.join(pathToDarknet, "darknet-cpp") + " detector train " + dataFilePath + " " + pathToCfg + " " + os.path.join(pathToProduction, "TrainableWeights/YOLO/darknet19_448.conv.23")
-            offDShelfWeights = os.path.join(pathToProduction, "OffDshelfWeights/YOLO/yolov2-voc.weights")
-            offDShelfCfg = os.path.join(pathToProduction, "OffDshelfWeights/YOLO/yolo-voc.2.0.cfg")
+            darknetTrain = os.path.join(pathToDarknet, "darknet") + " detector train " + dataFilePath + " " + pathToCfg + " " + os.path.join(pathToProduction, "TrainableWeights/YOLO/darknet53.conv.74")
+            offDShelfWeights = os.path.join(pathToProduction, "OffDshelfWeights/YOLO/yolov3.weights")
+            offDShelfCfg = os.path.join(pathToProduction, "OffDshelfWeights/YOLO/yolov3.cfg")
             break
         elif modelChoice == 2:
-            darknetTrain = os.path.join(pathToDarknet, "darknet-cpp") + " detector train " + dataFilePath + " " + pathToCfg + " " + os.path.join(pathToProduction, "TrainableWeights/Tiny-YOLO/tiny-yolo-voc.conv.13")
+            darknetTrain = os.path.join(pathToDarknet, "darknet") + " detector train " + dataFilePath + " " + pathToCfg + " " + os.path.join(pathToProduction, "TrainableWeights/Tiny-YOLO/tiny-yolo-voc.conv.13")
             offDShelfWeights = os.path.join(pathToProduction, "OffDshelfWeights/Tiny-YOLO/yolov2-tiny-voc.weights")
             offDShelfCfg = os.path.join(pathToProduction, "OffDshelfWeights/Tiny-YOLO/tiny-yolo-voc.cfg")
             break
@@ -337,7 +337,7 @@ if __name__ == "__main__":
     ValidationlogFilePath = os.path.join(trainingPath, "validLog.txt")
     for weight in weights:
         customWeightsPath = os.path.join(backupDir, weight)
-        darknetValid = os.path.join(pathToDarknet, "darknet-cpp") +" detector valid " + dataFilePath + " " + pathToCfg + " " + customWeightsPath
+        darknetValid = os.path.join(pathToDarknet, "darknet") +" detector valid " + dataFilePath + " " + pathToCfg + " " + customWeightsPath
         darknetValid += (" 2>&1 | tee " + ValidationlogFilePath)
         print "Validation command: ", darknetValid
         print "Running validation on custom weights: ", weight
@@ -366,7 +366,7 @@ if __name__ == "__main__":
     dataFile.write("names = " + VOCnamesFilePath + "\n")
     dataFile.write("backup = " + backupDir + "\n")
     dataFile.close()
-    VOCdarknetValid = os.path.join(pathToDarknet, "darknet-cpp") + " detector valid " + VOCdataFilePath + " " + offDShelfCfg + " " + offDShelfWeights
+    VOCdarknetValid = os.path.join(pathToDarknet, "darknet") + " detector valid " + VOCdataFilePath + " " + offDShelfCfg + " " + offDShelfWeights
     print "Off the Shelf Validation command: ", VOCdarknetValid
     offDshelfResults = os.path.join(sessionResultsPath, "VOC")
     os.mkdir(offDshelfResults)

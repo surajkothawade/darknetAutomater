@@ -63,7 +63,7 @@ def darknetLabelConverter(darknetLabelPath, labelsFile, imagesFile, pathLabelsCh
     		    if (elems[-1] in keys):
     			print("key :",elems[-1])
     			print("value :",label[elems[-1]])
-    			cls_id = label[elems[-1]]
+    		        cls_id = label[elems[-1]]
     		    print(elems)
     		    xmin = elems[0]
     		    print (elems)
